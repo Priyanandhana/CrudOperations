@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Study Management</title>
+<style>
+body {
+font-family: Arial, sans-serif;
+background-color: #f3f6fb;
+margin: 0;
+padding: 20px;
+}
+.container {
+max-width: 1200px;
+margin: 0 auto;
+padding: 20px;
+background-color: #fff;
+border-radius: 8px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+h1 {
+text-align: center;
+color: #4a90e2;
+margin-bottom: 20px;
+}
+table {
+width: 100%;
+border-collapse: collapse;
+margin-bottom: 20px;
+}
+table thead {
+background-color: #4a90e2;
+color: #fff;
+}
+table th, table td {
+text-align: left;
+padding: 12px;
+border: 1px solid #ddd;
+}
+table tr:nth-child(even) {
+background-color: #f9f9f9;
+}
+table tr:hover {
+background-color: #f1f1f1;
+}
+.actions a {
+text-decoration: none;
+padding: 8px 12px;
+Priyanandhana S
+2313712080018
+border-radius: 4px;
+font-size: 14px;
+}
+.actions .view-btn {
+background-color: #4caf50;
+color: white;
+}
+.actions .edit-btn {
+background-color: #ff9800;
+color: white;
+}
+.buttons {
+display: flex;
+justify-content: center; /* Centers the buttons horizontally */
+gap: 20px;
+margin-top: 20px;
+}
+.buttons a, .buttons button {
+text-decoration: none;
+background-color: #4a90e2; /* Blue background for Add Study */
+color: white;
+padding: 12px 20px;
+border-radius: 4px;
+font-size: 16px;
+border: none;
+cursor: pointer;
+width: 200px;
+text-align: center;
+}
+.buttons a:hover, .buttons button:hover {
+background-color: #357abd;
+}
+.buttons button {
+background-color: #ff3d3d;
+}
+.buttons button:hover {
+background-color: #e53935;
+}
+.buttons .add-btn {
+background-color: #4a90e2;
+}
+.buttons .add-btn:hover {
+background-color: #357abd;
+}
+.buttons .delete-btn {
+background-color: #ff3d3d;
+}
+.buttons .delete-btn:hover {
+background-color: #e53935;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Study Management by Priyanandhana</h1>
+<form method="POST" action="{% url 'study_delete_bulk' %}">
+{% csrf_token %}
+<table class="table">
+<thead>
+<tr>
+<th><input type="checkbox" id="select_all" onclick="selectAll()"></th>
+<th>Study Name</th>
+<th>Study Phase</th>
+<th>Sponsor Name</th>
+<th>Study Description</th>
+ <th>Attachments</th>
+
+<th>Actions</th>
+</tr>
+</thead>
+<tbody>
+{% for study in studies %}
+<tr>
+<td><input type="checkbox" name="study_ids" value="{{ study.id }}"></td>
+<td>{{ study.study_name }}</td>
+<td>{{ study.study_phase.name }}</td>
+<td>{{ study.sponsor_name }}</td>
+<td>{{ study.study_description }}</td>
+    <td>
+        {% if study.file_name %}
+        <a href="{{ study.attachment.url }}" download>{{ study.file_name }}</a>
+        {% else %}
+        No Attachment
+        {% endif %}
+    </td>
+<td>
+<a href="{% url 'study_view' study.id %}" class="btn btn-success">View</a>
+<a href="{% url 'study_edit' study.id %}" class="btn btn-warning">Edit</a>
+</td>
+</tr>
+{% empty %}
+<tr>
+<td colspan="6">No studies available</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+<div class="buttons">
+<a href="{% url 'study_add' %}" class="add-btn">Add Study</a>
+<button type="submit" class="delete-btn">Delete Selected</button>
+</div>
+</form>
+</div>
+<script>
+// JavaScript for "Select All" functionality
+function selectAll() {
+const checkboxes = document.querySelectorAll('input[name="study_ids"]');
+checkboxes.forEach(function(checkbox) {
+checkbox.checked = document.getElementById('select_all').checked;
+});
+}
+</script>
+</body>
+</html>

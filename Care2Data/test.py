@@ -1,0 +1,1 @@
+print(self.fields['study_phase'].choices)

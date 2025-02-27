@@ -1,0 +1,80 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>View Study</title>
+<style>
+body {
+font-family: Arial, sans-serif;
+background-color: #f3f6fb;
+margin: 0;
+padding: 20px;
+}
+.container {
+max-width: 900px;
+margin: 0 auto;
+padding: 20px;
+background-color: #fff;
+border-radius: 8px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+h1 {
+text-align: center;
+color: #4a90e2;
+margin-bottom: 20px;
+}
+p {
+font-size: 18px;
+margin-bottom: 10px;
+color: #333;
+}
+strong {
+color: #4a90e2;
+}
+.buttons {
+display: flex;
+justify-content: center;
+margin-top: 20px;
+}
+.buttons a {
+text-decoration: none;
+background-color: #4a90e2;
+color: white;
+padding: 12px 20px;
+border-radius: 4px;
+font-size: 16px;
+border: none;
+cursor: pointer;
+}
+.buttons a:hover {
+background-color: #357abd;
+}
+/* Ensure paragraph content does not get cut off */
+.study-details p {
+word-wrap: break-word;
+}
+
+</style>
+</head>
+<body>
+<div class="container">
+<h1>View Study</h1>
+<div class="study-details">
+<p><strong>Study Name:</strong> {{ study.study_name }}</p>
+<p><strong>Study Description:</strong> {{ study.study_description }}</p>
+<p><strong>Study Phase:</strong> {{ study.study_phase }}</p>
+<p><strong>Sponsor Name:</strong> {{ study.sponsor_name }}</p>
+    <p><strong>Attachments:</strong>
+     {% if file_name %}
+            <a href="{{ study.attachment.url }}" download>{{ file_name }}</a>
+        {% else %}
+            No Attachment
+        {% endif %}
+</p>
+</div>
+<div class="buttons">
+<a href="{% url 'study_list' %}"><button type="button">Cancel</button></a>
+</div>
+</div>
+</body>
+</html>
