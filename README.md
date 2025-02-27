@@ -1,2 +1,2 @@
-# MedallionArchitecture
-This is Structure of Medallion Architecture using Queries
+# CRUD OPERATIONS
+CRUD Operations using Django framework in Python
